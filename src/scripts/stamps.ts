@@ -1,0 +1,54 @@
+export interface StatData {
+  value: string;
+  label: string;
+}
+
+export interface ProjectData {
+  id: string;
+  title: string;
+  shortTitle: string;
+  category: string;
+  color: string;
+  org: string;
+  role: string;
+  dates: string;
+  order: number;
+  description: string;
+  bullets: string[];
+  body: string;
+  tags?: string[];
+  stats?: StatData[];
+  image?: string;
+  illoSize?: number;
+}
+
+export function createStampElement(project: ProjectData): HTMLElement {
+  const el = document.createElement('div');
+  el.className = `stamp stamp--${project.color}`;
+  el.dataset.projectId = project.id;
+  el.setAttribute('role', 'button');
+  el.setAttribute('tabindex', '0');
+  el.setAttribute('aria-label', `${project.title} — ${project.org}`);
+
+  const tags = project.tags ?? [project.category];
+  const tagsHtml = tags.map((t) => `<span class="stamp__tag">${t}</span>`).join('');
+
+  const illoStyle = project.illoSize ? ` style="width:${project.illoSize}px;height:${project.illoSize}px"` : '';
+  const imageHtml = project.image
+    ? `<img class="stamp__illo" src="${project.image}" alt="" loading="lazy"${illoStyle} />`
+    : '';
+
+  el.innerHTML = `
+    <div class="stamp__top">
+      <div class="stamp__org">${project.org}</div>
+      <div class="stamp__title">${project.title}</div>
+    </div>
+    ${imageHtml}
+    <div class="stamp__bottom">
+      <div class="stamp__tags">${tagsHtml}</div>
+      <div class="stamp__dates">${project.dates}</div>
+    </div>
+  `;
+
+  return el;
+}

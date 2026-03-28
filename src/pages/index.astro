@@ -1,0 +1,94 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import { marked } from 'marked';
+
+const allProjects = await getCollection('projects');
+
+// Sort by order, render markdown bodies at build time
+const projects = await Promise.all(
+  allProjects
+    .sort((a, b) => a.data.order - b.data.order)
+    .map(async (p) => ({
+      id: p.id,
+      title: p.data.title,
+      shortTitle: p.data.shortTitle,
+      category: p.data.category,
+      color: p.data.color,
+      org: p.data.org,
+      role: p.data.role,
+      dates: p.data.dates,
+      order: p.data.order,
+      description: p.data.description,
+      bullets: p.data.bullets,
+      tags: p.data.tags ?? [p.data.category],
+      stats: p.data.stats ?? [],
+      image: p.data.image ?? '',
+      illoSize: p.data.illoSize ?? 0,
+      body: p.body ? await marked.parse(p.body) : '',
+    }))
+);
+---
+
+<Base title="Hisham Saif — Portfolio">
+  <!-- Fixed Header -->
+  <header class="header">
+    <div class="header__name">Hisham Saif</div>
+    <nav class="header__nav">
+      <a class="header__link" href="mailto:hisham.saif.doha@gmail.com">Contact</a>
+      <a class="header__link" href="https://www.linkedin.com/in/hisham-saif-379b40153/" target="_blank" rel="noopener">LinkedIn</a>
+    </nav>
+  </header>
+
+  <!-- Grid viewport -->
+  <div class="grid-viewport" id="grid"></div>
+
+  <!-- Drag hint -->
+  <div class="drag-hint">Drag to explore</div>
+
+  <!-- Overlay -->
+  <div class="overlay"></div>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" role="dialog" aria-label="Project details">
+    <div class="sidebar__header">
+      <div class="sidebar__eyebrow"></div>
+      <button class="sidebar__close-btn" aria-label="Close">&times;</button>
+    </div>
+    <div class="sidebar__color-bar"></div>
+    <div class="sidebar__content">
+      <h2 class="sidebar__title"></h2>
+      <p class="sidebar__dates"></p>
+      <div class="sidebar__hero"></div>
+      <blockquote class="sidebar__description"></blockquote>
+      <div class="sidebar__stats"></div>
+      <h3 class="sidebar__section-title"></h3>
+      <ul class="sidebar__bullets"></ul>
+      <div class="sidebar__body"></div>
+      <div class="sidebar__footer">
+        <div class="sidebar__footer-tags"></div>
+        <div class="sidebar__footer-dates"></div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Inject project data and boot scripts -->
+  <script define:vars={{ projects }}>
+    window.__PROJECTS__ = projects;
+  </script>
+
+  <script>
+    import { initGrid } from '../scripts/grid';
+    import { initSidebar } from '../scripts/sidebar';
+    import type { ProjectData } from '../scripts/stamps';
+
+    const projects = (window as any).__PROJECTS__ as ProjectData[];
+    const viewport = document.getElementById('grid')!;
+
+    initSidebar(() => {
+      viewport.classList.remove('sidebar-open');
+    });
+
+    initGrid(viewport, projects);
+  </script>
+</Base>
