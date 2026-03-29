@@ -141,6 +141,9 @@ html, body {
   flex-shrink: 0;
   align-self: center;
   margin-top: 16px;
+  pointer-events: none;
+  -webkit-user-drag: none;
+  user-select: none;
 }
 
 /* --- Card top: org + title --- */
