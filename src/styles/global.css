@@ -181,6 +181,7 @@ html, body {
   touch-action: none;
   user-select: none;
   -webkit-user-select: none;
+  transition: filter 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .grid-viewport.is-dragging {
@@ -189,6 +190,8 @@ html, body {
 
 .grid-viewport.sidebar-open {
   pointer-events: none;
+  filter: blur(6px);
+  transition: filter 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* --- Stamp / Card --- */
