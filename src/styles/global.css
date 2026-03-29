@@ -76,24 +76,23 @@ html, body {
   letter-spacing: -0.3px;
 }
 
-/* --- Speech Bubble --- */
+/* --- Toast / Speech Bubble --- */
 .speech-bubble {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  margin-top: 8px;
+  position: fixed;
+  bottom: 32px;
+  left: 32px;
   background: rgba(255, 255, 255, 0.55);
   backdrop-filter: blur(16px) saturate(1.6);
   -webkit-backdrop-filter: blur(16px) saturate(1.6);
   border: 1px solid rgba(255, 255, 255, 0.7);
   color: var(--black);
   font-family: var(--font);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 400;
   line-height: 1.5;
-  padding: 12px 14px;
-  border-radius: 6px;
-  width: 240px;
+  padding: 14px 16px;
+  border-radius: 8px;
+  width: 260px;
   z-index: 200;
   opacity: 1;
   transform: translateY(0);
@@ -103,24 +102,12 @@ html, body {
 }
 
 .speech-bubble.animate-in {
-  animation: bubble-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-}
-
-/* Tail — points up at the toggle icon */
-.speech-bubble::before {
-  content: '';
-  position: absolute;
-  top: -9px;
-  left: 16px;
-  width: 18px;
-  height: 10px;
-  background: rgba(255, 255, 255, 0.65);
-  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  animation: toast-in 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
 .speech-bubble.hidden {
   opacity: 0;
-  transform: translateY(-6px);
+  transform: translateY(10px);
   pointer-events: none;
 }
 
@@ -143,8 +130,8 @@ html, body {
   opacity: 1;
 }
 
-@keyframes bubble-in {
-  from { opacity: 0; transform: translateY(-8px) scale(0.96); }
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(16px) scale(0.96); }
   to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
@@ -622,6 +609,13 @@ html, body {
 
   .header__nav {
     gap: 16px;
+  }
+
+  .speech-bubble {
+    left: 20px;
+    right: 20px;
+    bottom: 24px;
+    width: auto;
   }
 
   .stamp {
