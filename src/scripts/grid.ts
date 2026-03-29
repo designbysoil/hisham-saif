@@ -7,11 +7,19 @@ const TILE_COLS = 4;
 const TILE_ROWS = 2;
 
 function getStampDimensions() {
+  // Use a temp element to resolve CSS calc() values
+  const probe = document.createElement('div');
+  probe.style.cssText = 'position:absolute;visibility:hidden;width:var(--stamp-w);height:var(--stamp-h);';
+  document.body.appendChild(probe);
+  const w = probe.offsetWidth || 340;
+  const h = probe.offsetHeight || 440;
+  document.body.removeChild(probe);
+
   const style = getComputedStyle(document.documentElement);
-  const w = parseInt(style.getPropertyValue('--stamp-w')) || 340;
-  const h = parseInt(style.getPropertyValue('--stamp-h')) || 440;
   const gap = parseInt(style.getPropertyValue('--stamp-gap')) || 48;
-  return { w, h, gap };
+  const gapXStr = style.getPropertyValue('--stamp-gap-x').trim();
+  const gapX = gapXStr ? parseInt(gapXStr) : gap;
+  return { w, h, gap, gapX };
 }
 
 interface Cell {
@@ -24,8 +32,8 @@ export function initGrid(
   viewport: HTMLElement,
   projects: ProjectData[]
 ) {
-  let { w: STAMP_W, h: STAMP_H, gap: GAP } = getStampDimensions();
-  let CELL_W = STAMP_W + GAP;
+  let { w: STAMP_W, h: STAMP_H, gap: GAP, gapX: GAP_X } = getStampDimensions();
+  let CELL_W = STAMP_W + GAP_X;
   let CELL_H = STAMP_H + GAP;
   let TILE_W = TILE_COLS * CELL_W;
   let TILE_H = TILE_ROWS * CELL_H;
@@ -51,9 +59,10 @@ export function initGrid(
   const activeCells = new Map<string, Cell>();
   const pool: HTMLElement[] = [];
 
-  // Start with top row fully visible, horizontally centered
+  // Start with top row fully visible
   const vw = viewport.offsetWidth;
-  offsetX = -(vw / 2 - TILE_W / 2);
+  const isMobile = vw < 768;
+  offsetX = isMobile ? -GAP_X / 2 : -(vw / 2 - TILE_W / 2);
   offsetY = -(GAP - 40);
 
   function cellKey(col: number, row: number) {
@@ -240,8 +249,8 @@ export function initGrid(
   window.addEventListener('resize', () => {
     clearTimeout(resizeTimer);
     resizeTimer = window.setTimeout(() => {
-      ({ w: STAMP_W, h: STAMP_H, gap: GAP } = getStampDimensions());
-      CELL_W = STAMP_W + GAP;
+      ({ w: STAMP_W, h: STAMP_H, gap: GAP, gapX: GAP_X } = getStampDimensions());
+      CELL_W = STAMP_W + GAP_X;
       CELL_H = STAMP_H + GAP;
       TILE_W = TILE_COLS * CELL_W;
       TILE_H = TILE_ROWS * CELL_H;

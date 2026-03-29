@@ -520,9 +520,10 @@ html, body {
 /* --- Responsive --- */
 @media (max-width: 600px) {
   :root {
-    --stamp-w: calc(100vw - 40px);
-    --stamp-h: 380px;
-    --stamp-gap: 28px;
+    --stamp-w: calc(100vw - 90px);
+    --stamp-h: 430px;
+    --stamp-gap: 40px;
+    --stamp-gap-x: 16px;
     --sidebar-w: 100vw;
     --header-h: 56px;
   }
@@ -561,6 +562,12 @@ html, body {
 
   .sidebar__content {
     padding: 0 24px 40px;
+  }
+
+  .stamp__bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
   }
 
   .drag-hint {
