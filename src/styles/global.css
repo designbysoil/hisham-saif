@@ -118,15 +118,19 @@ html, body {
   padding: 4px;
   margin-left: 6px;
   color: var(--black);
-  opacity: 0.35;
+  opacity: 0.5;
   display: flex;
   align-items: center;
-  transition: opacity 0.15s ease;
+  transition: opacity 0.15s ease, color 0.15s ease;
   border-radius: 3px;
 }
 
-.bubble-toggle:hover,
+.bubble-toggle:hover {
+  opacity: 1;
+}
+
 .bubble-toggle.active {
+  color: var(--black);
   opacity: 1;
 }
 
