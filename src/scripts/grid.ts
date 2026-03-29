@@ -141,6 +141,9 @@ export function initGrid(
   // --- Pointer Events ---
   viewport.addEventListener('pointerdown', (e) => {
     if (isSidebarOpen()) return;
+    // Don't capture if clicking on the speech bubble or its toggle
+    const target = e.target as HTMLElement;
+    if (target.closest('#speech-bubble') || target.closest('#bubble-toggle')) return;
     isDragging = true;
     viewport.classList.add('is-dragging');
     dragStartX = e.clientX;

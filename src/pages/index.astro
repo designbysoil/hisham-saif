@@ -33,7 +33,18 @@ const projects = await Promise.all(
 <Base title="Hisham Saif — Portfolio">
   <!-- Fixed Header -->
   <header class="header">
-    <div class="header__name">Hisham Saif</div>
+    <div class="header__name-wrap">
+      <div class="header__name">Hisham Saif</div>
+      <button class="bubble-toggle" id="bubble-toggle" aria-label="Toggle intro">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M20 2H4a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z"/>
+        </svg>
+      </button>
+      <!-- Speech bubble anchored to name-wrap -->
+      <div class="speech-bubble" id="speech-bubble">
+        Hi, I'm a media producer &amp; project manager — and I'm open to new opportunities. Drag to explore my work.
+      </div>
+    </div>
     <nav class="header__nav">
       <a class="header__link" href="mailto:hisham.saif.doha@gmail.com">Contact</a>
       <a class="header__link" href="https://www.linkedin.com/in/hisham-saif-379b40153/" target="_blank" rel="noopener">LinkedIn</a>
@@ -90,5 +101,45 @@ const projects = await Promise.all(
     });
 
     initGrid(viewport, projects);
+
+    // Speech bubble toggle
+    const bubble = document.getElementById('speech-bubble')!;
+    const toggle = document.getElementById('bubble-toggle')!;
+
+    const isHidden = () => bubble.classList.contains('hidden');
+
+    const hideBubble = () => {
+      bubble.classList.remove('animate-in');
+      bubble.classList.add('hidden');
+      toggle.classList.remove('active');
+      localStorage.setItem('bubble-dismissed', '1');
+    };
+
+    const showBubble = () => {
+      bubble.classList.remove('hidden');
+      bubble.classList.add('animate-in');
+      toggle.classList.add('active');
+      localStorage.removeItem('bubble-dismissed');
+    };
+
+    // Restore state from localStorage
+    if (localStorage.getItem('bubble-dismissed')) {
+      bubble.classList.add('hidden');
+    } else {
+      bubble.classList.add('animate-in');
+      toggle.classList.add('active');
+    }
+
+    // Toggle icon opens/closes
+    toggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      isHidden() ? showBubble() : hideBubble();
+    });
+
+    // Click anywhere on bubble to dismiss
+    bubble.addEventListener('click', (e) => {
+      e.stopPropagation();
+      hideBubble();
+    });
   </script>
 </Base>
