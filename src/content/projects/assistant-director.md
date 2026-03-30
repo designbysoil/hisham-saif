@@ -6,6 +6,7 @@ color: "yellow"
 org: "Tribe Productions / White Rock Studios"
 role: "On-set logistics, daily scheduling, and crew coordination across documentary and commercial productions."
 tags: ["Logistics", "Coordination", "Film"]
+image: "/illustrations/assistant-director.png"
 stats:
   - { value: "2", label: "Production houses — Tribe & White Rock" }
 dates: "2024–Present"

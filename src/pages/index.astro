@@ -1,32 +1,67 @@
 ---
 import Base from '../layouts/Base.astro';
 import { getCollection } from 'astro:content';
+import { getImage } from 'astro:assets';
 import { marked } from 'marked';
 
 const allProjects = await getCollection('projects');
+
+// Import all illustration source images for optimization
+const illustrationModules = import.meta.glob<{ default: ImageMetadata }>(
+  '../assets/illustrations/*.{png,jpg,webp}',
+  { eager: true }
+);
+
+// Build a map: filename → ImageMetadata
+const illustrationMap = new Map<string, ImageMetadata>();
+for (const [path, mod] of Object.entries(illustrationModules)) {
+  const filename = path.split('/').pop()!;
+  illustrationMap.set(filename, mod.default);
+}
+
+// Generate optimized images at 1x and 2x for card display
+async function optimizeImage(imagePath: string) {
+  const filename = imagePath.split('/').pop()!;
+  const src = illustrationMap.get(filename);
+  if (!src) return { src: imagePath, srcset: '' };
+
+  const [img1x, img2x] = await Promise.all([
+    getImage({ src, width: 400, format: 'webp' }),
+    getImage({ src, width: 800, format: 'webp' }),
+  ]);
+
+  return {
+    src: img1x.src,
+    srcset: `${img1x.src} 400w, ${img2x.src} 800w`,
+  };
+}
 
 // Sort by order, render markdown bodies at build time
 const projects = await Promise.all(
   allProjects
     .sort((a, b) => a.data.order - b.data.order)
-    .map(async (p) => ({
-      id: p.id,
-      title: p.data.title,
-      shortTitle: p.data.shortTitle,
-      category: p.data.category,
-      color: p.data.color,
-      org: p.data.org,
-      role: p.data.role,
-      dates: p.data.dates,
-      order: p.data.order,
-      description: p.data.description,
-      bullets: p.data.bullets,
-      tags: p.data.tags ?? [p.data.category],
-      stats: p.data.stats ?? [],
-      image: p.data.image ?? '',
-      illoSize: p.data.illoSize ?? 0,
-      body: p.body ? await marked.parse(p.body) : '',
-    }))
+    .map(async (p) => {
+      const optimized = p.data.image ? await optimizeImage(p.data.image) : { src: '', srcset: '' };
+      return {
+        id: p.id,
+        title: p.data.title,
+        shortTitle: p.data.shortTitle,
+        category: p.data.category,
+        color: p.data.color,
+        org: p.data.org,
+        role: p.data.role,
+        dates: p.data.dates,
+        order: p.data.order,
+        description: p.data.description,
+        bullets: p.data.bullets,
+        tags: p.data.tags ?? [p.data.category],
+        stats: p.data.stats ?? [],
+        image: optimized.src,
+        imageSrcset: optimized.srcset,
+        illoSize: p.data.illoSize ?? 0,
+        body: p.body ? await marked.parse(p.body) : '',
+      };
+    })
 );
 ---
 

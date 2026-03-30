@@ -243,8 +243,10 @@ html, body {
 /* --- Card bottom: tags + date, pinned to bottom edge --- */
 .stamp__bottom {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: flex-end;
+  gap: 8px;
   margin-top: auto;
 }
 

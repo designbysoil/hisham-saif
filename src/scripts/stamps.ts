@@ -19,6 +19,7 @@ export interface ProjectData {
   tags?: string[];
   stats?: StatData[];
   image?: string;
+  imageSrcset?: string;
   illoSize?: number;
 }
 
@@ -34,8 +35,9 @@ export function createStampElement(project: ProjectData): HTMLElement {
   const tagsHtml = tags.map((t) => `<span class="stamp__tag">${t}</span>`).join('');
 
   const illoStyle = project.illoSize ? ` style="width:${project.illoSize}px;height:${project.illoSize}px"` : '';
+  const srcsetAttr = project.imageSrcset ? ` srcset="${project.imageSrcset}" sizes="(max-width: 600px) 100vw, 400px"` : '';
   const imageHtml = project.image
-    ? `<img class="stamp__illo" src="${project.image}" alt="" loading="lazy"${illoStyle} />`
+    ? `<img class="stamp__illo" src="${project.image}" alt=""${srcsetAttr} loading="lazy"${illoStyle} />`
     : '';
 
   el.innerHTML = `

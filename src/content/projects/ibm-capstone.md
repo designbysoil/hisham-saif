@@ -6,6 +6,7 @@ color: "black"
 org: "IBM / Coursera"
 role: "Managed a simulated end-to-end project — charter, WBS, risk register, sprint plans, burndown charts, close-out."
 tags: ["Project Mgmt", "Agile", "IT"]
+image: "/illustrations/ibm-capstone.png"
 stats:
   - { value: "8", label: "Lifecycle deliverables produced" }
   - { value: "<1w", label: "Completed individually" }

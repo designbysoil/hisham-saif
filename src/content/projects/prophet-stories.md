@@ -6,6 +6,7 @@ color: "black"
 org: "Qatar Media Corporation — Urdu Radio FM 107"
 role: "Researched from authoritative source, wrote scripts, performed all voice-over, and handled partial editing."
 tags: ["Scripting", "Voice-over", "Radio"]
+image: "/illustrations/prophet-stories.png"
 stats:
   - { value: "60", label: "Episodes, 30 per season" }
   - { value: "2", label: "Consecutive Ramadan runs" }
