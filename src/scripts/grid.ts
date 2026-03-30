@@ -97,6 +97,31 @@ export function initGrid(
     pool.push(cell.el);
   }
 
+  // --- Home button ---
+  const homeBtn = document.getElementById('home-btn');
+  const homeOffsetX = offsetX;
+  const homeOffsetY = offsetY;
+
+  function isIntroVisible() {
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const introX = INTRO_COL * CELL_W - offsetX;
+    const introY = INTRO_ROW * CELL_H - offsetY;
+    // On mobile, show home button when card is partially off-screen
+    if (isMobile) {
+      const insetX = STAMP_W * 0.3;
+      const insetY = STAMP_H * 0.3;
+      return (
+        introX + STAMP_W - insetX > 0 && introX + insetX < vw &&
+        introY + STAMP_H - insetY > 0 && introY + insetY < vh
+      );
+    }
+    return (
+      introX + STAMP_W > 0 && introX < vw &&
+      introY + STAMP_H > 0 && introY < vh
+    );
+  }
+
   function render() {
     const vw = window.innerWidth;
     const vh = window.innerHeight;
@@ -148,6 +173,15 @@ export function initGrid(
       if (!neededKeys.has(key)) {
         recycleElement(cell);
         activeCells.delete(key);
+      }
+    }
+
+    // Update home button visibility
+    if (homeBtn) {
+      if (isIntroVisible()) {
+        homeBtn.classList.remove('visible');
+      } else {
+        homeBtn.classList.add('visible');
       }
     }
   }
@@ -289,6 +323,40 @@ export function initGrid(
       case 'ArrowDown':  offsetY += CELL_H; render(); break;
     }
   });
+
+  // --- Home button click: animate back to intro ---
+  if (homeBtn) {
+    homeBtn.addEventListener('click', () => {
+      cancelAnimationFrame(animFrame);
+      velocityX = 0;
+      velocityY = 0;
+
+      const startX = offsetX;
+      const startY = offsetY;
+      const duration = 500;
+      const startTime = performance.now();
+
+      function easeOut(t: number) {
+        return 1 - Math.pow(1 - t, 3);
+      }
+
+      function animateHome(now: number) {
+        const elapsed = now - startTime;
+        const t = Math.min(elapsed / duration, 1);
+        const e = easeOut(t);
+
+        offsetX = startX + (homeOffsetX - startX) * e;
+        offsetY = startY + (homeOffsetY - startY) * e;
+        render();
+
+        if (t < 1) {
+          animFrame = requestAnimationFrame(animateHome);
+        }
+      }
+
+      animFrame = requestAnimationFrame(animateHome);
+    });
+  }
 
   // Initial render
   render();
