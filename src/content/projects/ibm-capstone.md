@@ -11,7 +11,7 @@ stats:
   - { value: "8", label: "Lifecycle deliverables produced" }
   - { value: "<1w", label: "Completed individually" }
 dates: "2026"
-order: 8
+order: 6
 description: "End-to-end simulated project managing the development of a real-time customer engagement app — from charter through close-out, completed in under a week."
 bullets:
   - "Completed IBM IT Project Manager Professional Certificate, managing a simulated end-to-end app development project for AHI's marketing team"

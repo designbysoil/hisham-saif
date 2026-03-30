@@ -11,7 +11,7 @@ stats:
   - { value: "3.5h", label: "Of live content daily" }
   - { value: "8mo", label: "Tenure on each show" }
 dates: "2020–2022"
-order: 5
+order: 7
 description: "Two flagship live programs — 3 to 3.5 hours each — produced and hosted solo, featuring current affairs, celebrity interviews, audience engagement, and daily contests."
 bullets:
   - "Produced and hosted two separate flagship live shows: The Morning Show (3 hours) and The Evening Show (3.5 hours), each running for 8 months"

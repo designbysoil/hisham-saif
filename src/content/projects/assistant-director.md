@@ -10,7 +10,7 @@ image: "/illustrations/assistant-director.png"
 stats:
   - { value: "2", label: "Production houses — Tribe & White Rock" }
 dates: "2024–Present"
-order: 7
+order: 5
 description: "On-set logistics, scheduling, and crew coordination for film and commercial productions across Qatar."
 bullets:
   - "Manage on-set logistics, daily scheduling, and crew coordination for film and commercial productions"

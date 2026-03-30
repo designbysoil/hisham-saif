@@ -11,7 +11,7 @@ stats:
   - { value: "60", label: "Episodes across 2 seasons" }
   - { value: "2×", label: "Weekly broadcast cadence" }
 dates: "2020–2022"
-order: 2
+order: 1
 description: "A fast-paced, twice-weekly technology show covering apps, software, cybersecurity, and digital trends for Qatar's Urdu-speaking community."
 bullets:
   - "Conceptualized and independently produced a 15–20 minute technology program covering apps, cybersecurity, software, and digital trends"

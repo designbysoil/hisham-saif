@@ -11,7 +11,7 @@ stats:
   - { value: "6+", label: "Clients including Katara Studios, Visit Qatar, QNB" }
   - { value: "2", label: "Production houses — Tribe & White Rock" }
 dates: "2024–Present"
-order: 6
+order: 8
 description: "Location recording and post-production mixing for documentaries, commercials, live events, and film projects across Qatar's production industry."
 bullets:
   - "Provide location sound recording and post-production mixing for documentary films, short films, and commercials across multiple production houses"

@@ -62,8 +62,9 @@ export function initGrid(
   // Start with top row fully visible
   const vw = viewport.offsetWidth;
   const isMobile = vw < 768;
-  offsetX = isMobile ? -GAP_X / 2 : -(vw / 2 - TILE_W / 2);
-  offsetY = -(GAP - 40);
+  const vh = viewport.offsetHeight;
+  offsetX = isMobile ? -(vw / 2 - STAMP_W / 2) : -(vw / 2 - TILE_W / 2);
+  offsetY = isMobile ? -(vh / 2 - STAMP_H / 2) : -(GAP - 40);
 
   function cellKey(col: number, row: number) {
     return `${col},${row}`;

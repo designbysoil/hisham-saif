@@ -11,7 +11,7 @@ stats:
   - { value: "4", label: "Years of uninterrupted coverage" }
   - { value: "5×", label: "Live bulletins per week" }
 dates: "2019–2023"
-order: 1
+order: 2
 description: "Four years of daily newsroom operations — researching, translating, and presenting live Urdu-language news bulletins across Qatar's national radio network."
 bullets:
   - "Researched, translated, and presented live news bulletins 4–5 days per week, sourcing from Qatar News Agency and local press"
