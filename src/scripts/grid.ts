@@ -206,7 +206,7 @@ export function initGrid(
   });
 
   viewport.addEventListener('pointermove', (e) => {
-    if (!isDragging) return;
+    if (!isDragging || isSidebarOpen()) return;
     const dx = e.clientX - dragStartX;
     const dy = e.clientY - dragStartY;
     offsetX = dragStartOffsetX - dx;
@@ -257,6 +257,10 @@ export function initGrid(
     if (localX <= STAMP_W && localY <= STAMP_H) {
       if (isIntroCell(col, row)) return;
       const projIdx = getProjectIndex(col, row);
+      // Release pointer capture before opening sidebar
+      // so touch events don't keep routing to the grid
+      try { viewport.releasePointerCapture(e.pointerId); } catch (_) {}
+      isDragging = false;
       viewport.classList.add('sidebar-open');
       openSidebar(realProjects[projIdx]);
     }
