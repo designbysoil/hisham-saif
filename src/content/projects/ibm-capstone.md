@@ -1,5 +1,5 @@
 ---
-title: "Managing a simulated app development project from charter to close-out"
+title: "End-to-end IT project management — charter to close-out"
 shortTitle: "IBM Capstone"
 category: "Education"
 color: "black"

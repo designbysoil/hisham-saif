@@ -1,5 +1,5 @@
 ---
-title: "Solo-producing 40+ consecutive daily live broadcasts during the FIFA World Cup"
+title: "40+ daily live shows, solo-produced for the FIFA World Cup"
 shortTitle: "FIFA 2022"
 category: "QMC"
 color: "yellow"

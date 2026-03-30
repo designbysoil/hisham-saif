@@ -1,5 +1,5 @@
 ---
-title: "Four years of daily live news bulletins and field reporting across Qatar"
+title: "Daily live news & field reporting — 4 years"
 shortTitle: "News Production"
 category: "QMC"
 color: "blue"

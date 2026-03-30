@@ -1,5 +1,5 @@
 ---
-title: "A narrative Ramadan series — 60 episodes researched, scripted, and voiced solo"
+title: "60-episode Ramadan series — researched, scripted, and voiced solo"
 shortTitle: "Prophet Stories"
 category: "QMC"
 color: "black"

@@ -1,5 +1,5 @@
 ---
-title: "Hosting and producing two flagship daily shows — 3 to 3.5 hours of live radio"
+title: "Two flagship daily shows — 3+ hours of live radio each"
 shortTitle: "Morning & Evening Show"
 category: "QMC"
 color: "red"

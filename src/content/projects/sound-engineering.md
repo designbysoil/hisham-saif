@@ -1,5 +1,5 @@
 ---
-title: "Location recording and post-production for documentaries, ads, and live events"
+title: "Location sound & post-production for docs, ads, and events"
 shortTitle: "Sound Engineering"
 category: "Freelance"
 color: "blue"

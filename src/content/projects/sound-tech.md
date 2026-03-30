@@ -1,5 +1,5 @@
 ---
-title: "A twice-weekly tech show making cybersecurity and apps accessible to millions"
+title: "Twice-weekly tech show — scripted, researched, and hosted solo"
 shortTitle: "Sound-tech Series"
 category: "QMC"
 color: "red"

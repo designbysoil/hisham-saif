@@ -1,5 +1,5 @@
 ---
-title: "On-set logistics, scheduling, and crew coordination for film productions"
+title: "On-set logistics & crew coordination for film productions"
 shortTitle: "Assistant Director"
 category: "Freelance"
 color: "yellow"
