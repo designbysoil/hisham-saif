@@ -37,7 +37,7 @@ async function optimizeImage(imagePath: string) {
 }
 
 // Sort by order, render markdown bodies at build time
-const projects = await Promise.all(
+const projectEntries = await Promise.all(
   allProjects
     .sort((a, b) => a.data.order - b.data.order)
     .map(async (p) => {
@@ -63,24 +63,36 @@ const projects = await Promise.all(
       };
     })
 );
+
+// Intro card — replaces the toast, sits in the grid
+const introCard = {
+  id: '__intro__',
+  title: '',
+  shortTitle: '',
+  category: '',
+  color: 'intro',
+  org: '',
+  role: '',
+  dates: '',
+  order: -1,
+  description: '',
+  bullets: [],
+  tags: [],
+  stats: [],
+  image: '',
+  imageSrcset: '',
+  illoSize: 0,
+  body: '',
+};
+
+const projects = [...projectEntries, introCard];
 ---
 
 <Base title="Hisham Saif — Portfolio">
-  <!-- Fixed Header -->
-  <header class="header">
+  <!-- Header (hidden, kept for future use) -->
+  <header class="header" style="display:none">
     <div class="header__name-wrap">
       <div class="header__name">Hisham Saif</div>
-      <button class="bubble-toggle" id="bubble-toggle" aria-label="Toggle intro">
-        <svg width="18" height="18" viewBox="0 0 32 32" fill="currentColor">
-          <path d="M17.74,30,16,29l4-7h6a2,2,0,0,0,2-2V8a2,2,0,0,0-2-2H6A2,2,0,0,0,4,8V20a2,2,0,0,0,2,2h9v2H6a4,4,0,0,1-4-4V8A4,4,0,0,1,6,4H26a4,4,0,0,1,4,4V20a4,4,0,0,1-4,4H21.16Z"/>
-          <rect x="8" y="10" width="16" height="2"/>
-          <rect x="8" y="16" width="10" height="2"/>
-        </svg>
-      </button>
-      <!-- Speech bubble anchored to name-wrap -->
-      <div class="speech-bubble" id="speech-bubble">
-        Hi, I'm a media producer &amp; project manager — and I'm open to new opportunities. Drag to explore my work.
-      </div>
     </div>
     <nav class="header__nav">
       <a class="header__link" href="mailto:hisham.saif.doha@gmail.com">Contact</a>
@@ -138,45 +150,5 @@ const projects = await Promise.all(
     });
 
     initGrid(viewport, projects);
-
-    // Speech bubble toggle
-    const bubble = document.getElementById('speech-bubble')!;
-    const toggle = document.getElementById('bubble-toggle')!;
-
-    const isHidden = () => bubble.classList.contains('hidden');
-
-    const hideBubble = () => {
-      bubble.classList.remove('animate-in');
-      bubble.classList.add('hidden');
-      toggle.classList.remove('active');
-      localStorage.setItem('bubble-dismissed', '1');
-    };
-
-    const showBubble = () => {
-      bubble.classList.remove('hidden');
-      bubble.classList.add('animate-in');
-      toggle.classList.add('active');
-      localStorage.removeItem('bubble-dismissed');
-    };
-
-    // Restore state from localStorage
-    if (localStorage.getItem('bubble-dismissed')) {
-      bubble.classList.add('hidden');
-    } else {
-      bubble.classList.add('animate-in');
-      toggle.classList.add('active');
-    }
-
-    // Toggle icon opens/closes
-    toggle.addEventListener('click', (e) => {
-      e.stopPropagation();
-      isHidden() ? showBubble() : hideBubble();
-    });
-
-    // Click anywhere on bubble to dismiss
-    bubble.addEventListener('click', (e) => {
-      e.stopPropagation();
-      hideBubble();
-    });
   </script>
 </Base>

@@ -1,5 +1,5 @@
 import type { ProjectData } from './stamps';
-import { createStampElement } from './stamps';
+import { createStampElement, createIntroElement } from './stamps';
 import { openSidebar, isSidebarOpen } from './sidebar';
 
 // Grid configuration — 4 columns, 2 rows per repeating tile
@@ -73,10 +73,22 @@ export function initGrid(
     return ((n % m) + m) % m;
   }
 
+  // Remove intro from projects array — it lives at one fixed absolute position
+  const introArrayIdx = projects.findIndex(p => p.id === '__intro__');
+  const realProjects = projects.filter(p => p.id !== '__intro__');
+  // Fixed absolute grid position for the intro card
+  const INTRO_COL = isMobile ? 0 : 2;
+  const INTRO_ROW = isMobile ? 0 : 1;
+
+  function isIntroCell(col: number, row: number): boolean {
+    return col === INTRO_COL && row === INTRO_ROW;
+  }
+
   function getProjectIndex(col: number, row: number): number {
     const c = mod(col, TILE_COLS);
     const r = mod(row, TILE_ROWS);
-    return r * TILE_COLS + c;
+    const slot = r * TILE_COLS + c;
+    return slot % realProjects.length;
   }
 
   function recycleElement(cell: Cell) {
@@ -102,18 +114,19 @@ export function initGrid(
         neededKeys.add(key);
 
         if (!activeCells.has(key)) {
+          const intro = isIntroCell(col, row);
           const projIdx = getProjectIndex(col, row);
-          const project = projects[projIdx];
+          const project = realProjects[projIdx];
 
           let el: HTMLElement;
+          const stamp = intro ? createIntroElement() : createStampElement(project);
           if (pool.length > 0) {
             el = pool.pop()!;
-            const stamp = createStampElement(project);
             el.replaceWith(stamp);
             viewport.appendChild(stamp);
             el = stamp;
           } else {
-            el = createStampElement(project);
+            el = stamp;
             viewport.appendChild(el);
           }
 
@@ -141,9 +154,6 @@ export function initGrid(
   // --- Pointer Events ---
   viewport.addEventListener('pointerdown', (e) => {
     if (isSidebarOpen()) return;
-    // Don't capture if clicking on the speech bubble or its toggle
-    const target = e.target as HTMLElement;
-    if (target.closest('#speech-bubble') || target.closest('#bubble-toggle')) return;
     isDragging = true;
     viewport.classList.add('is-dragging');
     dragStartX = e.clientX;
@@ -210,9 +220,10 @@ export function initGrid(
     const localY = clickY - row * CELL_H;
 
     if (localX <= STAMP_W && localY <= STAMP_H) {
+      if (isIntroCell(col, row)) return;
       const projIdx = getProjectIndex(col, row);
       viewport.classList.add('sidebar-open');
-      openSidebar(projects[projIdx]);
+      openSidebar(realProjects[projIdx]);
     }
   }
 

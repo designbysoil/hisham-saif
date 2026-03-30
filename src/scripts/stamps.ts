@@ -54,3 +54,18 @@ export function createStampElement(project: ProjectData): HTMLElement {
 
   return el;
 }
+
+export function createIntroElement(): HTMLElement {
+  const el = document.createElement('div');
+  el.className = 'stamp stamp--intro';
+  el.innerHTML = `
+    <div class="stamp__intro-content">
+      <div class="stamp__title"><span style="color:#444">Hi, I'm Hisham Saif</span><br><span style="color:#aaa">A media producer &amp; project manager, open to new opportunities. Drag to explore my work.</span></div>
+      <div class="stamp__intro-links">
+        <a class="stamp__intro-link" href="mailto:hisham.saif.doha@gmail.com">Contact</a>
+        <a class="stamp__intro-link" href="https://www.linkedin.com/in/hisham-saif-379b40153/" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+  `;
+  return el;
+}
